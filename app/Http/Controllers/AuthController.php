@@ -77,6 +77,15 @@ class AuthController extends Controller
                     ->numbers()              // al menos un dígito
                     ->symbols()              // al menos un carácter especial
             ],
+        ], [
+            'nombre.required' => 'Por favor ingrese su nombre.',
+            'apellidos.required' => 'Por favor ingrese sus apellidos.',
+            'correo.required' => 'El correo es obligatorio.',
+            'correo.email' => 'El correo no es válido.',
+            'correo.unique' => 'Este correo ya está registrado.',
+            'telefono.max' => 'El teléfono no puede exceder 20 caracteres.',
+            'password.required' => 'Debes ingresar una contraseña.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
         ]);
 
         User::create([

@@ -11,11 +11,25 @@
   <form action="{{ route($role.'.register.submit') }}" method="POST" novalidate>
     @csrf
     <input type="hidden" name="role" value="{{ $role }}" />
-
-    <div class="form-row"><label>Nombre(s):</label><input name="nombre" type="text" required /></div>
-    <div class="form-row"><label>Apellidos:</label><input name="apellidos" type="text" required /></div>
-    <div class="form-row"><label>Correo electrónico:</label><input name="correo" type="email" required /></div>
-    <div class="form-row"><label>Teléfono:</label><input name="telefono" type="tel" /></div>
+    <div class="form-row">
+        <label>Nombre(s):</label>
+        <input name="nombre" type="text" required />
+    </div>
+    <div class="form-row">
+        <label>Apellidos:</label>
+        <input name="apellidos" type="text" required />
+    </div>
+    <div class="form-row">
+        <label>Correo electrónico:</label>
+        <input name="correo" type="email" required value="{{ old('correo') }}" />
+        @error('correo')
+            <span class="req invalid">{{ $message }}</span>
+        @enderror
+    </div>
+    <div class="form-row">
+        <label>Teléfono:</label>
+        <input name="telefono" type="tel" />
+    </div>
 
     <div class="form-row">
       <label>Contraseña:</label>
@@ -23,8 +37,10 @@
         <input type="password" id="pass1-{{ $role }}" name="password" required data-role="{{ $role }}">
         <button type="button" class="toggle-pwd" data-target="pass1-{{ $role }}">👁</button>
       </div>
+      @error('password')
+          <span class="req invalid">{{ $message }}</span>
+      @enderror
     </div>
-
     <div class="form-row">
       <label>Verifica Contraseña:</label>
       <div class="pwd-container">
