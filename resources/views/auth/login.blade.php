@@ -19,8 +19,10 @@
 
     <div class="form-row pw-row">
       <label for="password">Contraseña:</label>
-      <input id="password" name="password" type="password" required />
-      <span class="pw-toggle" data-target="#password"></span>
+      <div class="pwd-container">
+        <input id="password" name="password" type="password" required />
+        <button type="button" class="toggle-pwd" data-target="password">👁</button>
+      </div>
     </div>
 
     <button class="submit-btn" type="submit">Iniciar sesión</button>
