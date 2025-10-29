@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Administrador;
+use App\Models\Empleado;
+use App\Models\Tecnico;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -13,38 +16,52 @@ class AuthController extends Controller
     public function showLogin()
         {
             $role = request()->segment(1); // 'admin', 'empleado' o 'soporte'
-            $icon = $role === 'admin' ? '🛡️' : ($role === 'empleado' ? '👨‍💼' : '👨‍🔧');
+            $icon = match($role) {
+                'admin' => '🛡️',
+                'empleado' => '👨‍💼',
+                'soporte' => '👨‍🔧',
+                default => '🔐',
+            };
             return view('auth.login', compact('role', 'icon'));
         }
 
     public function login(Request $request)
     {
-        $role = request()->segment(1); //
+        $roleAttempt = request()->segment(1);
 
-        $credentials = $request->validate([
-            'usuario' => 'required|email',
+        $request->validate([
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
-        // Agregar condición por rol
-        $credentials['role'] = $role;
+        $user = User::where('email', $request->email)->first();
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            // Redirigir según rol
-            switch ($role) {
-                case 'admin':
-                    return redirect()->route('admin.dashboard');
-                case 'empleado':
-                    return redirect()->route('empleado.dashboard');
-                case 'soporte':
-                    return redirect()->route('soporte.dashboard');
-            }
+        if (!$user) {
+            return back()->withErrors(['email' => 'El correo no está registrado.'])->onlyInput('email');
         }
 
-        return back()->withErrors([
-            'usuario' => 'Las credenciales no coinciden o el rol es incorrecto.',
-        ])->onlyInput('usuario');
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Contraseña incorrecta.']);
+        }
+
+        $role = $user->role;
+
+        if (!$role) {
+            return back()->withErrors(['email' => 'Usuario sin rol asignado.'])->onlyInput('email');
+        }
+
+        if ($roleAttempt !== $role) {
+            return back()->withErrors(['email' => 'El rol no coincide con este usuario.'])->onlyInput('email');
+        }
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        return match($role) {
+            'admin' => redirect()->route('admin.dashboard'),
+            'empleado' => redirect()->route('empleado.dashboard'),
+            'soporte' => redirect()->route('soporte.dashboard'),
+        };
     }
 
     public function showRegister()
@@ -66,7 +83,7 @@ class AuthController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'correo' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'telefono' => 'nullable|string|max:20',
             'password' => [
                 'required',
@@ -80,22 +97,29 @@ class AuthController extends Controller
         ], [
             'nombre.required' => 'Por favor ingrese su nombre.',
             'apellidos.required' => 'Por favor ingrese sus apellidos.',
-            'correo.required' => 'El correo es obligatorio.',
-            'correo.email' => 'El correo no es válido.',
-            'correo.unique' => 'Este correo ya está registrado.',
+            'email.required' => 'El correo es obligatorio.',
+            'email.email' => 'El correo no es válido.',
+            'email.unique' => 'Este correo ya está registrado.',
             'telefono.max' => 'El teléfono no puede exceder 20 caracteres.',
-            'password.required' => 'Debes ingresar una contraseña.',
+            'password.required' => 'Por favor ingrese una contraseña.',
             'password.confirmed' => 'Las contraseñas no coinciden.',
         ]);
 
-        User::create([
-            'name' => "{$request->nombre} {$request->apellidos}",
-            'email' => $request->correo,
+        $user = User::create([
+            'name' => $request->nombre . ' ' . $request->apellidos,
+            'nombre' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $role
+            'telefono' => $request->telefono,
         ]);
 
-        return redirect()->route($role.'.login')
-                         ->with('status', 'Cuenta creada con éxito');
+        match ($role) {
+            'admin' => Administrador::create(['id_usuario' => $user->id]),
+            'empleado' => Empleado::create(['id_usuario' => $user->id]),
+            'soporte' => Tecnico::create(['id_usuario' => $user->id]),
+        };
+
+        return redirect()->route($role . '.login')->with('status', 'Cuenta creada con éxito');
     }
 }

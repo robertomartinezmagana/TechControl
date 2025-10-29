@@ -2,8 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('input[type="password"][data-role]').forEach(password => {
         const role = password.dataset.role;
         const rulesContainer = document.querySelector(`.pwdReq[data-role="${role}"]`);
-        const rules = {};
+        if (!rulesContainer) return;
 
+        const rules = {};
         rulesContainer.querySelectorAll('p[data-rule]').forEach(p => {
             rules[p.dataset.rule] = p;
         });

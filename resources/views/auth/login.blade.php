@@ -10,11 +10,13 @@
 
   <form action="{{ route($role.'.login.submit') }}" method="POST">
     @csrf
-    <input type="hidden" name="role" value="{{ $role }}" />
 
     <div class="form-row">
-      <label for="usuario">Usuario:</label>
-      <input id="usuario" name="usuario" type="text" required />
+      <label for="email">Correo electrónico:</label>
+      <input id="email" name="email" type="email" required value="{{ old('email') }}" />
+      @error('email')
+          <span class="req invalid">{{ $message }}</span>
+      @enderror
     </div>
 
     <div class="form-row pw-row">
@@ -23,6 +25,9 @@
         <input id="password" name="password" type="password" required />
         <button type="button" class="toggle-pwd" data-target="password">👁</button>
       </div>
+      @error('password')
+          <span class="req invalid">{{ $message }}</span>
+      @enderror
     </div>
 
     <button class="submit-btn" type="submit">Iniciar sesión</button>

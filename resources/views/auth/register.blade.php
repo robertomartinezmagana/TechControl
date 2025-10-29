@@ -11,24 +11,37 @@
   <form action="{{ route($role.'.register.submit') }}" method="POST" novalidate>
     @csrf
     <input type="hidden" name="role" value="{{ $role }}" />
+
     <div class="form-row">
         <label>Nombre(s):</label>
-        <input name="nombre" type="text" required />
-    </div>
-    <div class="form-row">
-        <label>Apellidos:</label>
-        <input name="apellidos" type="text" required />
-    </div>
-    <div class="form-row">
-        <label>Correo electrónico:</label>
-        <input name="correo" type="email" required value="{{ old('correo') }}" />
-        @error('correo')
+        <input name="nombre" type="text" required value="{{ old('nombre') }}" />
+        @error('nombre')
             <span class="req invalid">{{ $message }}</span>
         @enderror
     </div>
+
+    <div class="form-row">
+        <label>Apellidos:</label>
+        <input name="apellidos" type="text" required value="{{ old('apellidos') }}" />
+        @error('apellidos')
+            <span class="req invalid">{{ $message }}</span>
+        @enderror
+    </div>
+
+    <div class="form-row">
+        <label>Correo electrónico:</label>
+        <input name="email" type="email" required value="{{ old('email') }}" />
+        @error('email')
+            <span class="req invalid">{{ $message }}</span>
+        @enderror
+    </div>
+
     <div class="form-row">
         <label>Teléfono:</label>
-        <input name="telefono" type="tel" />
+        <input name="telefono" type="tel" value="{{ old('telefono') }}" />
+        @error('telefono')
+            <span class="req invalid">{{ $message }}</span>
+        @enderror
     </div>
 
     <div class="form-row">
@@ -41,10 +54,11 @@
           <span class="req invalid">{{ $message }}</span>
       @enderror
     </div>
+
     <div class="form-row">
       <label>Verifica Contraseña:</label>
       <div class="pwd-container">
-        <input type="password" id="pass2-{{ $role }}" name="password_confirmation" required>
+        <input type="password" id="pass2-{{ $role }}" name="password_confirmation" required data-role="{{ $role }}">
         <button type="button" class="toggle-pwd" data-target="pass2-{{ $role }}">👁</button>
       </div>
     </div>
