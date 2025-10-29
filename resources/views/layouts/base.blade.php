@@ -4,7 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>@yield('title')</title>
-  <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+  @yield('styles')
 </head>
 <body>
   <main>
@@ -15,8 +16,6 @@
     &copy; {{ date('Y') }} <strong>TechControl</strong>. Todos los derechos reservados.
   </footer>
 
-  @stack('scripts')
-  <script src="{{ asset('js/password-rules.js') }}"></script>
-  <script src="{{ asset('js/password-show.js') }}"></script>
+  @yield('scripts')
 </body>
 </html>

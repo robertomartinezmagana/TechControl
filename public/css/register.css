@@ -1,0 +1,35 @@
+.pwdReq {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.pwdReq p.req {
+    margin: 4px 0;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+.req.valid::before {
+    content: '✅ ';
+}
+
+.req::before,
+.req.invalid::before {
+    content: '❌ ';
+}
+
+.req.valid {
+    color: #2e9a63;
+}
+
+.req.invalid {
+    color: #d9534f;
+}
+
+.form-row {
+    gap: 4px;
+}
+
+.form-footer a {
+    margin-top: 4px;
+    display: block;
+}

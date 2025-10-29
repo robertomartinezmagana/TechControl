@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    background: #f4f6f8;
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1b2330;
+    min-height: 100vh;
+    display: block;
+    padding: 0;
+}
+
+.dashboard-container {
+    display: flex;
+    height: 100%;
+    min-height: 0;
+}
+
+.dashboard-sidebar {
+    width: 220px;
+    background: var(--primary-dark);
+    color: white;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: 100vh;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.sidebar-header p.sub {
+    font-size: 14px;
+    color: #a5b4fc;
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar-link {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: var(--round);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background: #2f5f9e;
+    transform: translateX(3px);
+}
+
+/* -----------------------------
+   Contenido principal
+-------------------------------*/
+.dashboard-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Header */
+.dashboard-header h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.dashboard-header p.sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+/* Grid estadísticas */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: var(--round);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(38, 60, 85, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(38, 60, 85, 0.12);
+}
+
+.stat-card h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.stat-card p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+/* -----------------------------
+   Responsive
+-------------------------------*/
+@media (max-width: 1024px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .sidebar-link {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+}

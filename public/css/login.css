@@ -1,0 +1,25 @@
+.pwd-row {
+}
+
+.role-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--primary);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 14px 0;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 10px rgba(46, 75, 122, 0.12);
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.role-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 22px rgba(46, 75, 122, 0.14)
+}

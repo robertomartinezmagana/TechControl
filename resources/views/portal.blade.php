@@ -2,6 +2,10 @@
 
 @section('title', $splash ? 'TechControl' : 'Portal de Usuarios')
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/portal.css') }}">
+@endsection
+
 @section('content')
 @if($splash)
   <div class="splash">
@@ -25,12 +29,12 @@
 @endif
 @endsection
 
-@push('scripts')
+@section('scripts')
 @if($splash)
 <script>
-  setTimeout(() => {
+setTimeout(() => {
     window.location.href = "{{ url('/portal') }}";
-  }, 5000);
+}, 5000);
 </script>
 @endif
-@endpush
+@endsection

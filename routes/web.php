@@ -3,22 +3,49 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
-    return view('portal', ['splash' => true]);
-});
+// Role list
+$roles = [
+    'admin' => 'Administrador',
+    'empleado' => 'Empleado',
+    'soporte' => 'Tecnico'
+];
 
-Route::get('/portal', function () {
-    return view('portal', ['splash' => false]);
-});
+// Portal & splash
+Route::get('/', fn() => view('portal', ['splash' => true]));
+Route::get('/portal', fn() => view('portal', ['splash' => false]));
 
-// Rutas de autenticación por rol
-foreach (['admin', 'empleado', 'soporte'] as $role) {
-    // Mostrar formularios
-    Route::get("/$role/login", [AuthController::class, 'showLogin'])->name("$role.login");
-    Route::get("/$role/registro", [AuthController::class, 'showRegister'])->name("$role.register");
+// Authentication routes per role
+foreach ($roles as $role => $label) {
+    Route::prefix($role)->name("$role.")->group(function () use ($role) {
+        Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
-    // Procesar formularios
-    Route::post("/$role/login", [AuthController::class, 'login'])->name("$role.login.submit");
-    Route::post("/$role/registro", [AuthController::class, 'register'])->name("$role.register.submit");
+        Route::get('/registro', [AuthController::class, 'showRegister'])->name('register');
+        Route::post('/registro', [AuthController::class, 'register'])->name('register.submit');
+    });
 }
 
+// Protected routes
+Route::middleware(['auth'])->group(function () use ($roles) {
+    foreach ($roles as $role => $label) {
+
+        Route::prefix($role)->name("$role.")->group(function () use ($role, $label) {
+
+            // Dashboard
+            $controllerClass = "App\Http\Controllers\\$label\\DashboardController";
+            Route::get('/dashboard', [$controllerClass, 'index'])->name('dashboard');
+
+            // CRUD resources (only if role has access)
+            $resources = match($role) {
+                'admin' => ['equipos', 'software', 'mantenimientos', 'notificaciones', 'reportes'],
+                'empleado' => ['equipos', 'incidencias', 'notificaciones'],
+                'soporte' => ['mantenimientos', 'incidencias', 'notificaciones'],
+            };
+
+            foreach ($resources as $resource) {
+                $resourceController = "App\Http\Controllers\\$label\\".ucfirst($resource)."Controller";
+                Route::resource($resource, $resourceController);
+            }
+        });
+    }
+});

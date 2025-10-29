@@ -2,6 +2,11 @@
 
 @section('title', "Inicio de Sesión: $role")
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+@endsection
+
 @section('content')
 <div class="form-card">
   <div class="top-icon">{{ $icon ?? '🔐' }}</div>
@@ -38,4 +43,9 @@
     <a href="{{ route($role.'.register') }}">Regístrese aquí</a>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/password-rules.js') }}"></script>
+<script src="{{ asset('js/password-show.js') }}"></script>
 @endsection
