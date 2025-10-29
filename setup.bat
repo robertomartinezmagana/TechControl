@@ -40,3 +40,4 @@ echo Proyecto Laravel en funcionamiento en Sail.
 echo Puedes acceder en http://localhost
 echo =========================================
 pause
+
