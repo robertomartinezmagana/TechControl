@@ -11,8 +11,13 @@ $roles = [
 ];
 
 // Portal & splash
-Route::get('/', fn() => view('portal', ['splash' => true]));
-Route::get('/portal', fn() => view('portal', ['splash' => false]));
+Route::get('/', function () {
+    return view('splash');
+})->name('splash');
+
+Route::get('/portal', function () {
+    return view('portal');
+})->name('portal');
 
 // Authentication routes per role
 foreach ($roles as $role => $label) {

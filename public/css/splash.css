@@ -1,0 +1,54 @@
+body.splash {
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.logo-container {
+    z-index: 2;
+    text-align: center;
+    animation: fadeZoom 2s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeZoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.logo-text {
+    font-size: 4rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 2px;
+}
+
+.logo-text span {
+    color: #00bcd4;
+}

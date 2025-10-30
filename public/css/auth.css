@@ -117,3 +117,65 @@ input:focus {
     color: #284f82;
     transform: scale(1.1);
 }
+
+.req.valid::before {
+    content: '✅ ';
+}
+
+.req::before,
+.req.invalid::before {
+    content: '❌ ';
+}
+
+.req.valid {
+    color: #2e9a63;
+}
+
+.req.invalid {
+    color: #d9534f;
+}
+
+.pwdReq {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.pwdReq p.req {
+    margin: 4px 0;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+.pwd-row {
+}
+
+.role-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--primary);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 14px 0;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 10px rgba(46, 75, 122, 0.12);
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.role-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 22px rgba(46, 75, 122, 0.14)
+}
+
+.form-row {
+    gap: 4px;
+}
+
+.form-footer a {
+    margin-top: 4px;
+    display: block;
+}
