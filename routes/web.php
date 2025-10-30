@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Administrador\CrudController;
 use App\Http\Controllers\AuthController;
 
 // Role list
@@ -33,7 +34,6 @@ foreach ($roles as $role => $label) {
 // Protected routes
 Route::middleware(['auth'])->group(function () use ($roles) {
     foreach ($roles as $role => $label) {
-
         Route::prefix($role)->name("$role.")->group(function () use ($role, $label) {
 
             // Dashboard
@@ -47,10 +47,18 @@ Route::middleware(['auth'])->group(function () use ($roles) {
                 'soporte' => ['mantenimientos', 'incidencias', 'notificaciones'],
             };
 
+            // CrudController para todos los recursos
             foreach ($resources as $resource) {
-                $resourceController = "App\Http\Controllers\\$label\\".ucfirst($resource)."Controller";
-                Route::resource($resource, $resourceController);
+                Route::prefix($resource)->name("$resource.")->group(function () use ($resource) {
+                    Route::get('/', fn() => app(CrudController::class)->index($resource))->name('index');
+                    Route::get('/create', fn() => app(CrudController::class)->create($resource))->name('create');
+                    Route::post('/', fn(Request $request) => app(CrudController::class)->store($request, $resource))->name('store');
+                    Route::get('/{id}/edit', fn($id) => app(CrudController::class)->edit($resource, $id))->name('edit');
+                    Route::put('/{id}', fn(Request $request, $id) => app(CrudController::class)->update($request, $resource, $id))->name('update');
+                    Route::delete('/{id}', fn($id) => app(CrudController::class)->destroy($resource, $id))->name('destroy');
+                });
             }
         });
     }
 });
+
