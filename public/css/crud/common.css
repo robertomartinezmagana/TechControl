@@ -1,0 +1,46 @@
+:root {
+    --primary: #2f5f9e;
+    --primary-dark: #1e3a5f;
+    --muted: #6c757d;
+    --round: 8px;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f8;
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1b2330;
+    min-height: 100vh;
+    display: block;
+    padding: 0;
+}
+
+main.content {
+    padding: 30px;
+    max-width: 960px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: var(--round);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}

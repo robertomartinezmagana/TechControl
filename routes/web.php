@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrador\CrudController;
 use App\Http\Controllers\AuthController;
@@ -50,7 +51,7 @@ Route::middleware(['auth'])->group(function () use ($roles) {
             // CrudController para todos los recursos
             foreach ($resources as $resource) {
                 Route::prefix($resource)->name("$resource.")->group(function () use ($resource) {
-                    Route::get('/', fn() => app(CrudController::class)->index($resource))->name('index');
+                    Route::get('/', fn(Request $request) => app(CrudController::class)->index($resource, $request))->name('index');
                     Route::get('/create', fn() => app(CrudController::class)->create($resource))->name('create');
                     Route::post('/', fn(Request $request) => app(CrudController::class)->store($request, $resource))->name('store');
                     Route::get('/{id}/edit', fn($id) => app(CrudController::class)->edit($resource, $id))->name('edit');

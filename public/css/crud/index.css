@@ -1,0 +1,140 @@
+.index-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.index-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.index-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: #1b2330;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(38, 60, 85, 0.08);
+    border-radius: var(--round);
+    overflow: hidden;
+}
+
+.table th,
+.table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 15px;
+}
+
+.table th {
+    background: #f0f2f5;
+    font-weight: 600;
+    color: #333;
+}
+
+.table td.actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.action-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+
+.action-delete {
+    background: none;
+    border: none;
+    color: #d9534f;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.action-delete:hover {
+    text-decoration: underline;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+}
+
+.badge-operativo {
+    background-color: #28a745;
+}
+
+.badge-mantenimiento {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-obsoleto {
+    background-color: #6c757d;
+}
+
+.badge-baja {
+    background-color: #dc3545;
+}
+
+.empty-row {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    font-style: italic;
+}
+
+.filter-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filter-form .form-control {
+    padding: 10px 14px;
+    border-radius: var(--round);
+    border: 1px solid #ccc;
+    font-size: 15px;
+    flex: 1;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: var(--round);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.pagination-wrapper {
+    margin-top: 30px;
+    text-align: center;
+}
