@@ -10,19 +10,23 @@
 @section('content')
 <main class="index-wrapper">
     <div class="index-header">
-        <h1>{{ $modelName }} Registrados</h1>
+        <h1>{{ $modelPlural }} Registrados</h1>
         <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary">+ Nuevo {{ $modelName }}</a>
     </div>
 
     <form method="GET" class="filter-form">
-        <input type="text" name="search" placeholder="Buscar por marca o modelo" value="{{ $search }}" class="form-control">
-        <select name="estado" class="form-control">
-            <option value="">Todos los estados</option>
-            <option value="Operativo" {{ $estado == 'Operativo' ? 'selected' : '' }}>Operativo</option>
-            <option value="Mantenimiento" {{ $estado == 'Mantenimiento' ? 'selected' : '' }}>Mantenimiento</option>
-            <option value="Obsoleto" {{ $estado == 'Obsoleto' ? 'selected' : '' }}>Obsoleto</option>
-            <option value="Baja" {{ $estado == 'Baja' ? 'selected' : '' }}>Baja</option>
-        </select>
+        @foreach($filters as $field => $type)
+            @if(is_array($type))
+                <select name="{{ $field }}" class="form-control">
+                    <option value="">{{ $filterLabels[$field] }}</option>
+                    @foreach($type as $option)
+                        <option value="{{ $option }}" {{ request($field) == $option ? 'selected' : '' }}>{{ $option }}</option>
+                    @endforeach
+                </select>
+            @else
+                <input type="text" name="{{ $field }}" placeholder="Buscar por {{ ucfirst($field) }}" value="{{ request($field) }}" class="form-control">
+            @endif
+        @endforeach
         <button type="submit" class="btn btn-secondary">Filtrar</button>
     </form>
 
@@ -30,18 +34,24 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Estado</th>
+                    @foreach($fields as $field)
+                        <th>{{ ucfirst($field) }}</th>
+                    @endforeach
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($items as $item)
                 <tr>
-                    <td>{{ $item->marca }}</td>
-                    <td>{{ $item->modelo }}</td>
-                    <td><span class="badge badge-{{ strtolower($item->estado) }}">{{ $item->estado }}</span></td>
+                    @foreach($fields as $field)
+                        <td>
+                            @if($field === 'estado')
+                                <span class="badge badge-{{ strtolower($item->$field) }}">{{ $item->$field }}</span>
+                            @else
+                                {{ $item->$field }}
+                            @endif
+                        </td>
+                    @endforeach
                     <td class="actions">
                         <a href="{{ route($routePrefix . '.edit', $item) }}" class="action-link">Editar</a>
                         <form action="{{ route($routePrefix . '.destroy', $item) }}" method="POST">
@@ -53,7 +63,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="empty-row">No hay registros disponibles.</td>
+                    <td colspan="{{ count($fields) + 1 }}" class="empty-row">No hay registros disponibles.</td>
                 </tr>
                 @endforelse
             </tbody>
