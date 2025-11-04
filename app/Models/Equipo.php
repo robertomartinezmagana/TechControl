@@ -30,16 +30,22 @@ class Equipo extends Model
                 'marca' => ['type' => 'text', 'label' => 'Marca', 'required' => true],
                 'modelo' => ['type' => 'text', 'label' => 'Modelo', 'required' => true],
                 'numero_serie' => ['type' => 'text', 'label' => 'Número de Serie', 'required' => true],
-                'estado' => ['type' => 'select', 'label' => 'Estado', 'options' => ['Operativo', 'Mantenimiento', 'Obsoleto', 'Baja'], 'required' => true],
+                'estado' => [
+                    'type' => 'select',
+                    'label' => 'Estado',
+                    'options' => ['Operativo', 'Mantenimiento', 'Obsoleto', 'Baja'],
+                    'required' => true
+                ],
+                'id_empleado_asignado' => [
+                    'type' => 'select-model',
+                    'label' => 'Empleado Asignado',
+                    'model' => \App\Models\Empleado::class,
+                    'display' => 'name',
+                    'subtext' => 'email',
+                    'required' => false
+                ],
             ],
-            'id_empleado_asignado' => [
-                'type' => 'select-model',
-                'label' => 'Empleado Asignado',
-                'model' => \App\Models\Empleado::class,
-                'display' => 'nombre_completo',
-                'subtext' => 'email',
-                'required' => false
-            ],
+
         ];
     }
 
@@ -74,5 +80,4 @@ class Equipo extends Model
             ->using(EquipoSoftware::class)
             ->withPivot('fecha_instalacion', 'version_instalada');
     }
-
 }
