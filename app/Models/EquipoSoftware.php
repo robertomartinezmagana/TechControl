@@ -10,6 +10,13 @@ class EquipoSoftware extends Model
     use HasFactory;
 
     protected $table = 'equipo_software';
+    protected $primaryKey = null;
+    public $incrementing = false;
+    public $timestamps = false;
+    protected $fillable = [
+        'id_equipo', 'id_software', 'fecha_instalacion', 'version_instalada'
+    ];
+
     public static function config()
     {
         return [
@@ -51,9 +58,15 @@ class EquipoSoftware extends Model
         ];
     }
 
-    public $timestamps = false;
+    // Relación 1-M EquipoSoftware-Equipo
+    public function equipo()
+    {
+        return $this->belongsTo(Equipo::class, 'id_equipo');
+    }
 
-    protected $fillable = [
-        'id_equipo', 'id_software', 'fecha_instalacion', 'version_instalada'
-    ];
+    // Relación 1-M EquipoSoftware-Software
+    public function software()
+    {
+        return $this->belongsTo(Software::class, 'id_software');
+    }
 }

@@ -10,6 +10,11 @@ class Incidencia extends Model
     use HasFactory;
 
     protected $table = 'incidencias';
+    protected $primaryKey = 'id_incidencia';
+    protected $fillable = [
+        'titulo', 'descripcion', 'fecha_reporte', 'estado', 'prioridad', 'id_usuario_reporta', 'id_usuario_tecnico', 'id_equipo'
+    ];
+
     public static function config()
     {
         return [
@@ -65,26 +70,25 @@ class Incidencia extends Model
         ];
     }
 
-    protected $primaryKey = 'id_incidencia';
-    protected $fillable = [
-        'titulo', 'descripcion', 'fecha_reporte', 'estado', 'prioridad', 'id_usuario_reporta', 'id_usuario_tecnico', 'id_equipo'
-    ];
-
+    // Relación M-1 Incidencia-Equipo (en el que se presenta)
     public function equipo()
     {
         return $this->belongsTo(Equipo::class, 'id_equipo');
     }
 
+    // Relación 1-1 Incidencia-Usuario (que reporta)
     public function usuarioReporta()
     {
         return $this->belongsTo(Usuario::class, 'id_usuario_reporta');
     }
 
+    // Relación 1-1 Incidencia-Tecnico (que la atiende)
     public function tecnico()
     {
         return $this->belongsTo(Tecnico::class, 'id_usuario_tecnico');
     }
 
+    // Relación 1-M Incidencia-Notificaciones (que genera)
     public function notificaciones()
     {
         return $this->hasMany(Notificacion::class, 'id_incidencia');

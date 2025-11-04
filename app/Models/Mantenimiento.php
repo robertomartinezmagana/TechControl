@@ -78,16 +78,19 @@ class Mantenimiento extends Model
         'tipo', 'fecha_programada', 'fecha_realizada', 'descripcion', 'estado', 'observaciones', 'id_equipo', 'id_usuario_tecnico'
     ];
 
+    // Relación M-1 Mantenimientos-Equipo (al que se le da)
     public function equipo()
     {
         return $this->belongsTo(Equipo::class, 'id_equipo');
     }
 
+    // Relación M-1 Mantenimientos-Tecnico (que las realiza)
     public function tecnico()
     {
         return $this->belongsTo(Tecnico::class, 'id_usuario_tecnico');
     }
 
+    // Relación 1-M Mantenimiento-Notificaciones (que genera)
     public function notificaciones()
     {
         return $this->hasMany(Notificacion::class, 'id_mantenimiento');

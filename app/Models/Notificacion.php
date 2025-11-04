@@ -10,6 +10,11 @@ class Notificacion extends Model
     use HasFactory;
 
     protected $table = 'notificaciones';
+    protected $primaryKey = 'id_notificacion';
+    protected $fillable = [
+        'titulo', 'mensaje', 'tipo', 'fecha_envio', 'leida', 'id_usuario_destino', 'id_mantenimiento', 'id_incidencia'
+    ];
+
     public static function config()
     {
         return [
@@ -77,21 +82,19 @@ class Notificacion extends Model
         ];
     }
 
-    protected $primaryKey = 'id_notificacion';
-    protected $fillable = [
-        'titulo', 'mensaje', 'tipo', 'fecha_envio', 'leida', 'id_usuario_destino', 'id_mantenimiento', 'id_incidencia'
-    ];
-
+    // Relación M-1 Notificaciones-Usuario (al que se envían)
     public function usuarioDestino()
     {
         return $this->belongsTo(Usuario::class, 'id_usuario_destino');
     }
 
+    // Relación opcional M-1 Notificaciones-Mantenimiento (del que informan)
     public function mantenimiento()
     {
         return $this->belongsTo(Mantenimiento::class, 'id_mantenimiento');
     }
 
+    // Relación opcional M-1 Notificaciones-Incidencia (de la que informan)
     public function incidencia()
     {
         return $this->belongsTo(Incidencia::class, 'id_incidencia');

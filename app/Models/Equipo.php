@@ -10,6 +10,11 @@ class Equipo extends Model
     use HasFactory;
 
     protected $table = 'equipos';
+    protected $primaryKey = 'id_equipo';
+    protected $fillable = [
+        'marca', 'modelo', 'numero_serie', 'tipo_equipo', 'ubicacion', 'estado', 'fecha_registro', 'id_empleado_asignado'
+    ];
+
     public static function config()
     {
         return [
@@ -31,36 +36,43 @@ class Equipo extends Model
                 'type' => 'select-model',
                 'label' => 'Empleado Asignado',
                 'model' => \App\Models\Empleado::class,
-                'display' => 'nombre_completo', // o 'nombre' si no tienes nombre completo
-                'subtext' => 'email', // opcional: para mostrar email como subtítulo
+                'display' => 'nombre_completo',
+                'subtext' => 'email',
                 'required' => false
             ],
         ];
     }
 
-    protected $primaryKey = 'id_equipo';
-    protected $fillable = [
-        'marca', 'modelo', 'numero_serie', 'tipo_equipo', 'ubicacion', 'estado', 'fecha_registro', 'id_empleado_asignado'
-    ];
-
+    // Relación M-1 Equipo-Empleado (al que es asignado)
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'id_empleado_asignado');
     }
 
+    // Relación 1-M Equipo-Incidencias (que presenta)
     public function incidencias()
     {
         return $this->hasMany(Incidencia::class, 'id_equipo');
     }
 
+    // Relación 1-M Equipo-Mantenimientos (que tuvo)
     public function mantenimientos()
     {
         return $this->hasMany(Mantenimiento::class, 'id_equipo');
     }
 
+    // Relación 1-M Equipo-EquipoSoftware
+    public function softwareInstalado()
+    {
+        return $this->hasMany(EquipoSoftware::class, 'id_equipo');
+    }
+
+    // Relación virtual (con un pivot) M-M Equipo-Software
     public function software()
     {
         return $this->belongsToMany(Software::class, 'equipo_software', 'id_equipo', 'id_software')
+            ->using(EquipoSoftware::class)
             ->withPivot('fecha_instalacion', 'version_instalada');
     }
+
 }

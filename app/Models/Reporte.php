@@ -10,6 +10,11 @@ class Reporte extends Model
     use HasFactory;
 
     protected $table = 'reportes';
+    protected $primaryKey = 'id_reporte';
+    protected $fillable = [
+        'tipo', 'fecha_generacion', 'formato', 'ruta_archivo', 'id_usuario_admin'
+    ];
+
     public static function config()
     {
         return [
@@ -55,11 +60,7 @@ class Reporte extends Model
         ];
     }
 
-    protected $primaryKey = 'id_reporte';
-    protected $fillable = [
-        'tipo', 'fecha_generacion', 'formato', 'ruta_archivo', 'id_usuario_admin'
-    ];
-
+    // Relación M-1 Reporte-Administrador (que lo genera)
     public function usuarioAdmin()
     {
         return $this->belongsTo(Administrador::class, 'id_usuario_admin');

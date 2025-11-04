@@ -16,19 +16,19 @@ class Tecnico extends Model
         'id_usuario',
     ];
 
-    // Relation to User
+    // Relación 1-1 Técnico-Usuario
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_usuario');
     }
 
-    // Relation: maintenances performed
+    // Relación 1-M Técnico-Mantenimientos (los que ha llevado a cabo)
     public function mantenimientos(): HasMany
     {
         return $this->hasMany(Mantenimiento::class, 'id_usuario_tecnico');
     }
 
-    // Relation: incidencias assigned
+    // Relación 1-M Técnico-Incidencias (las que ha atendido)
     public function incidencias(): HasMany
     {
         return $this->hasMany(Incidencia::class, 'id_usuario_tecnico');
