@@ -11,24 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Define all role tables with their corresponding primary key names
         $roles = [
-            'administrador' => 'id_administrador',
-            'empleado'      => 'id_empleado',
-            'tecnico'       => 'id_tecnico',
+            'administradores' => 'id_administrador',
+            'empleados'        => 'id_empleado',
+            'tecnicos'         => 'id_tecnico',
         ];
 
         foreach ($roles as $tableName => $primaryKey) {
             Schema::create($tableName, function (Blueprint $table) use ($primaryKey) {
                 $table->id($primaryKey);
-
-                // Foreign key to users.id
                 $table->unsignedBigInteger('id_usuario');
                 $table->foreign('id_usuario')
                       ->references('id')
                       ->on('users')
                       ->onDelete('cascade');
-
                 $table->timestamps();
             });
         }
@@ -39,8 +35,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('administrador');
-        Schema::dropIfExists('empleado');
-        Schema::dropIfExists('tecnico');
+        Schema::dropIfExists('administradores');
+        Schema::dropIfExists('empleados');
+        Schema::dropIfExists('tecnicos');
     }
 };
