@@ -22,7 +22,7 @@ class Equipo extends Model
             'filters' => [
                 'marca' => 'text',
                 'modelo' => 'text',
-                'estados' => ['Operativo', 'Mantenimiento', 'Obsoleto', 'Baja'],
+                'estado' => ['Operativo', 'Mantenimiento', 'Obsoleto', 'Baja'],
             ],
             'form' => [
                 'marca' => ['type' => 'text', 'label' => 'Marca', 'required' => true],
