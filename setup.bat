@@ -24,7 +24,7 @@ vendor\bin\sail artisan key:generate
 
 :: Paso 6: Ejecutar migraciones
 echo Ejecutando migraciones...
-vendor\bin\sail artisan migrate
+vendor\bin\sail artisan migrate --seed
 
 :: Paso 7: Levantar los contenedores de Sail
 echo Levantando los contenedores de Sail...
