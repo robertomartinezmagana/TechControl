@@ -13,7 +13,7 @@ abstract class UsuarioBase extends Model
     // Relación 1-1 con Usuario
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id_usuario');
+        return $this->belongsTo(Usuario::class, 'id_usuario');
     }
 
     // Accessor para nombre completo

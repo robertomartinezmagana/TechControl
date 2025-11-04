@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Usuario;
 use App\Models\Administrador;
 use App\Models\Empleado;
 use App\Models\Tecnico;
@@ -34,7 +34,7 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = Usuario::where('email', $request->email)->first();
 
         if (!$user) {
             return back()->withErrors(['email' => 'El correo no está registrado.'])->onlyInput('email');
@@ -105,7 +105,7 @@ class AuthController extends Controller
             'password.confirmed' => 'Las contraseñas no coinciden.',
         ]);
 
-        $user = User::create([
+        $user = Usuario::create([
             'name' => $request->nombre . ' ' . $request->apellidos,
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,

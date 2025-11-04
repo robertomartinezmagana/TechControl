@@ -12,19 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         $roles = [
-            'administradores' => 'id_administrador',
-            'empleados'        => 'id_empleado',
-            'tecnicos'         => 'id_tecnico',
+            'administradores',
+            'empleados',
+            'tecnicos',
         ];
 
-        foreach ($roles as $tableName => $primaryKey) {
-            Schema::create($tableName, function (Blueprint $table) use ($primaryKey) {
-                $table->id($primaryKey);
-                $table->unsignedBigInteger('id_usuario');
-                $table->foreign('id_usuario')
-                      ->references('id')
-                      ->on('users')
-                      ->onDelete('cascade');
+        foreach ($roles as $tableName) {
+            Schema::create($tableName, function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
                 $table->timestamps();
             });
         }

@@ -9,11 +9,10 @@ class CreateNotificacionTable extends Migration
     public function up()
     {
         Schema::create('notificaciones', function (Blueprint $table) {
-            $table->id('id_notificacion');
+            $table->id();
             $table->string('titulo');
             $table->text('mensaje');
             $table->enum('tipo', ['Mantenimiento', 'Incidencia', 'Vencimiento', 'General']);
-            $table->timestamp('fecha_envio');
             $table->boolean('leida')->default(false);
             $table->foreignId('id_usuario_destino')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('id_mantenimiento')->nullable()->constrained('mantenimientos')->onDelete('cascade');

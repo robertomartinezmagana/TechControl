@@ -9,7 +9,7 @@ class CreateMantenimientoTable extends Migration
     public function up()
     {
         Schema::create('mantenimientos', function (Blueprint $table) {
-            $table->id('id_mantenimiento');
+            $table->id();
             $table->enum('tipo', ['Preventivo', 'Correctivo']);
             $table->timestamp('fecha_programada');
             $table->timestamp('fecha_realizada')->nullable();

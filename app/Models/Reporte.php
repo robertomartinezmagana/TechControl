@@ -12,7 +12,7 @@ class Reporte extends Model
     protected $table = 'reportes';
     protected $primaryKey = 'id_reporte';
     protected $fillable = [
-        'tipo', 'fecha_generacion', 'formato', 'ruta_archivo', 'id_usuario_admin'
+        'tipo', 'formato', 'ruta_archivo', 'id_usuario_admin'
     ];
 
     public static function config()
@@ -20,7 +20,7 @@ class Reporte extends Model
         return [
             'name' => 'Reporte',
             'plural' => 'Reportes',
-            'fields' => ['tipo', 'formato', 'fecha_generacion', 'ruta_archivo'],
+            'fields' => ['tipo', 'formato', 'ruta_archivo'],
             'filters' => [
                 'tipo' => ['Incidencias', 'Mantenimientos', 'Inventario', 'Usuarios'],
                 'formato' => ['PDF', 'Excel', 'CSV'],
@@ -30,11 +30,6 @@ class Reporte extends Model
                     'type' => 'select',
                     'label' => 'Tipo de Reporte',
                     'options' => ['Incidencias', 'Mantenimientos', 'Inventario', 'Usuarios'],
-                    'required' => true
-                ],
-                'fecha_generacion' => [
-                    'type' => 'datetime-local',
-                    'label' => 'Fecha de Generación',
                     'required' => true
                 ],
                 'formato' => [
@@ -61,8 +56,8 @@ class Reporte extends Model
     }
 
     // Relación M-1 Reporte-Administrador (que lo genera)
-    public function usuarioAdmin()
+    public function admin()
     {
-        return $this->belongsTo(Administrador::class, 'id_usuario_admin');
+        return $this->belongsTo(Administrador::class, 'id_admin');
     }
 }

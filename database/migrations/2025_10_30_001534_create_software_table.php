@@ -9,7 +9,7 @@ class CreateSoftwareTable extends Migration
     public function up()
     {
         Schema::create('software', function (Blueprint $table) {
-            $table->id('id_software');
+            $table->id();
             $table->string('nombre');
             $table->string('version');
             $table->string('licencia');

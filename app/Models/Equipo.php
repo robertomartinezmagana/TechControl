@@ -9,10 +9,8 @@ class Equipo extends Model
 {
     use HasFactory;
 
-    protected $table = 'equipos';
-    protected $primaryKey = 'id_equipo';
     protected $fillable = [
-        'marca', 'modelo', 'numero_serie', 'tipo_equipo', 'ubicacion', 'estado', 'fecha_registro', 'id_empleado'
+        'marca', 'modelo', 'numero_serie', 'tipo_equipo', 'ubicacion', 'estado', 'id_empleado'
     ];
 
     public static function config()
@@ -30,6 +28,8 @@ class Equipo extends Model
                 'marca' => ['type' => 'text', 'label' => 'Marca', 'required' => true],
                 'modelo' => ['type' => 'text', 'label' => 'Modelo', 'required' => true],
                 'numero_serie' => ['type' => 'text', 'label' => 'Número de Serie', 'required' => true],
+                'tipo_equipo' => ['type' => 'text', 'label' => 'Tipo', 'required' => false],
+                'ubicacion' => ['type' => 'text', 'label' => 'Ubicación', 'required' => false],
                 'estado' => [
                     'type' => 'select',
                     'label' => 'Estado',

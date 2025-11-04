@@ -9,14 +9,13 @@ class CreateEquipoTable extends Migration
     public function up()
     {
         Schema::create('equipos', function (Blueprint $table) {
-            $table->id('id_equipo');
+            $table->id();
             $table->string('marca');
             $table->string('modelo');
             $table->string('numero_serie');
-            $table->string('tipo_equipo');
-            $table->string('ubicacion');
+            $table->string('tipo_equipo')->nullable();
+            $table->string('ubicacion')->nullable();
             $table->enum('estado', ['Operativo', 'Mantenimiento', 'Obsoleto', 'Baja']);
-            $table->timestamp('fecha_registro');
             $table->foreignId('id_empleado')
                   ->nullable()
                   ->constrained('empleados')

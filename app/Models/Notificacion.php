@@ -9,10 +9,8 @@ class Notificacion extends Model
 {
     use HasFactory;
 
-    protected $table = 'notificaciones';
-    protected $primaryKey = 'id_notificacion';
     protected $fillable = [
-        'titulo', 'mensaje', 'tipo', 'fecha_envio', 'leida', 'id_usuario_destino', 'id_mantenimiento', 'id_incidencia'
+        'titulo', 'mensaje', 'tipo', 'leida', 'id_usuario_destino', 'id_mantenimiento', 'id_incidencia'
     ];
 
     public static function config()
@@ -20,7 +18,7 @@ class Notificacion extends Model
         return [
             'name' => 'Notificación',
             'plural' => 'Notificaciones',
-            'fields' => ['titulo', 'tipo', 'fecha_envio', 'leida'],
+            'fields' => ['titulo', 'tipo', 'leida'],
             'filters' => [
                 'tipo' => ['Sistema', 'Manual', 'Automática'],
                 'leida' => ['Sí', 'No'],
@@ -41,11 +39,6 @@ class Notificacion extends Model
                     'type' => 'select',
                     'label' => 'Tipo de Notificación',
                     'options' => ['Sistema', 'Manual', 'Automática'],
-                    'required' => true
-                ],
-                'fecha_envio' => [
-                    'type' => 'datetime-local',
-                    'label' => 'Fecha de Envío',
                     'required' => true
                 ],
                 'leida' => [

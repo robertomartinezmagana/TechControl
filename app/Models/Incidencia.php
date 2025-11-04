@@ -9,10 +9,8 @@ class Incidencia extends Model
 {
     use HasFactory;
 
-    protected $table = 'incidencias';
-    protected $primaryKey = 'id_incidencia';
     protected $fillable = [
-        'titulo', 'descripcion', 'fecha_reporte', 'estado', 'prioridad', 'id_usuario_reporta', 'id_usuario_tecnico', 'id_equipo'
+        'titulo', 'descripcion', 'estado', 'prioridad', 'id_usuario_reporta', 'id_usuario_tecnico', 'id_equipo'
     ];
 
     public static function config()
@@ -20,7 +18,7 @@ class Incidencia extends Model
         return [
             'name' => 'Incidencia',
             'plural' => 'Incidencias',
-            'fields' => ['titulo', 'estado', 'prioridad', 'fecha_reporte'],
+            'fields' => ['titulo', 'estado', 'prioridad'],
             'filters' => [
                 'estado' => ['Abierta', 'En Proceso', 'Resuelta', 'Cerrada'],
                 'prioridad' => ['Alta', 'Media', 'Baja'],
@@ -29,7 +27,6 @@ class Incidencia extends Model
             'form' => [
                 'titulo' => ['type' => 'text', 'label' => 'Título', 'required' => true],
                 'descripcion' => ['type' => 'textarea', 'label' => 'Descripción', 'required' => true],
-                'fecha_reporte' => ['type' => 'date', 'label' => 'Fecha de Reporte', 'required' => true],
                 'estado' => [
                     'type' => 'select',
                     'label' => 'Estado',
@@ -77,15 +74,15 @@ class Incidencia extends Model
     }
 
     // Relación 1-1 Incidencia-Usuario (que reporta)
-    public function usuarioReporta()
+    public function usuario()
     {
-        return $this->belongsTo(Usuario::class, 'id_usuario_reporta');
+        return $this->belongsTo(Usuario::class, 'id_usuario');
     }
 
     // Relación 1-1 Incidencia-Tecnico (que la atiende)
     public function tecnico()
     {
-        return $this->belongsTo(Tecnico::class, 'id_usuario_tecnico');
+        return $this->belongsTo(Tecnico::class, 'id_tecnico');
     }
 
     // Relación 1-M Incidencia-Notificaciones (que genera)

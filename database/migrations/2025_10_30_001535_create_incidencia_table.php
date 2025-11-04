@@ -11,13 +11,12 @@ class CreateIncidenciaTable extends Migration
     public function up()
     {
         Schema::create('incidencias', function (Blueprint $table) {
-            $table->id('id_incidencia');
+            $table->id();
             $table->string('titulo');
             $table->text('descripcion');
-            $table->timestamp('fecha_reporte');
             $table->enum('estado', ['Pendiente', 'En proceso', 'Resuelto']);
             $table->enum('prioridad', ['Baja', 'Media', 'Alta']);
-            $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('id_tecnico')
                   ->nullable()
                   ->constrained('tecnicos')

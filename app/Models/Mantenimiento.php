@@ -9,7 +9,10 @@ class Mantenimiento extends Model
 {
     use HasFactory;
 
-    protected $table = 'mantenimientos';
+    protected $fillable = [
+        'tipo', 'fecha_programada', 'fecha_realizada', 'descripcion', 'estado', 'observaciones', 'id_equipo', 'id_usuario_tecnico'
+    ];
+
     public static function config()
     {
         return [
@@ -73,11 +76,6 @@ class Mantenimiento extends Model
         ];
     }
 
-    protected $primaryKey = 'id_mantenimiento';
-    protected $fillable = [
-        'tipo', 'fecha_programada', 'fecha_realizada', 'descripcion', 'estado', 'observaciones', 'id_equipo', 'id_usuario_tecnico'
-    ];
-
     // Relación M-1 Mantenimientos-Equipo (al que se le da)
     public function equipo()
     {
@@ -87,7 +85,7 @@ class Mantenimiento extends Model
     // Relación M-1 Mantenimientos-Tecnico (que las realiza)
     public function tecnico()
     {
-        return $this->belongsTo(Tecnico::class, 'id_usuario_tecnico');
+        return $this->belongsTo(Tecnico::class, 'id_tecnico');
     }
 
     // Relación 1-M Mantenimiento-Notificaciones (que genera)

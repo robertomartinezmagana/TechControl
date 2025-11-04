@@ -13,6 +13,7 @@ class CreateEquipoSoftwareTable extends Migration
             $table->foreignId('id_equipo')->constrained('equipos')->onDelete('cascade');
             $table->foreignId('id_software')->constrained('software')->onDelete('cascade');
             $table->timestamp('fecha_instalacion');
+            $table->timestamp('fecha_vencimiento');
             $table->string('version_instalada');
             $table->timestamps();
         });

@@ -11,10 +11,9 @@ class CreateReporteTable extends Migration
         Schema::create('reportes', function (Blueprint $table) {
             $table->id('id_reporte');
             $table->enum('tipo', ['Inventario', 'Mantenimiento', 'Incidencias', 'General']);
-            $table->timestamp('fecha_generacion');
             $table->enum('formato', ['PDF', 'Excel']);
             $table->string('ruta_archivo');
-            $table->foreignId('id_usuario_admin')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('id_admin')->constrained('administradores')->onDelete('cascade');
             $table->timestamps();
         });
     }

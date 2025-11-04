@@ -10,7 +10,6 @@ class Software extends Model
     use HasFactory;
 
     protected $table = 'software';
-    protected $primaryKey = 'id_software';
     protected $fillable = [
         'nombre', 'version', 'licencia', 'fabricante'
     ];
