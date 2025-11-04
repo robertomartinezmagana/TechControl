@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 class CrudController extends Controller
 {
+    // Pasar la clase correcta del Modelo según su nombre
     private function resolveModelClass($resource)
     {
         $map = [
@@ -22,18 +23,18 @@ class CrudController extends Controller
         return $map[$resource] ?? abort(404, "Modelo no definido para '$resource'");
     }
 
+    // Pasar el nombre correcto del label de filter
     private function formatFilterLabel(string $field): string
     {
-        // Diccionario de excepciones con género y número
         $customLabels = [
             'licencia' => 'Todas las Licencias',
             'prioridad' => 'Todas las Prioridades',
             'leida' => 'Leída/No Leída'
         ];
-
         return $customLabels[$field] ?? 'Todos los ' . ucfirst(Str::plural(str_replace('_', ' ', $field)));
     }
 
+    // Acciones acorde al contexto de configuración de cada modelo
     private function hydrateSelectModelFields(array $formFields): array
     {
         foreach ($formFields as $name => &$field) {
@@ -56,6 +57,7 @@ class CrudController extends Controller
         return $formFields;
     }
 
+    // Acción CRUD de vista (READ ALL)
     public function index($resource, Request $request)
     {
         $modelClass = $this->resolveModelClass($resource);
@@ -86,6 +88,7 @@ class CrudController extends Controller
         ]);
     }
 
+    // Acción CRUD creación (CREATE)
     public function create($resource)
     {
         $modelClass = $this->resolveModelClass($resource);
@@ -101,6 +104,7 @@ class CrudController extends Controller
         ]);
     }
 
+    // Acción CRUD de guardar (posterior a guardar) (SAVE)
     public function store(Request $request, $resource)
     {
         $modelClass = $this->resolveModelClass($resource);
@@ -109,6 +113,7 @@ class CrudController extends Controller
         return redirect()->route('admin.' . $resource . '.index');
     }
 
+    // Acción CRUD de editar (EDIT)
     public function edit($resource, $id)
     {
         $modelClass = $this->resolveModelClass($resource);
@@ -126,6 +131,7 @@ class CrudController extends Controller
         ]);
     }
 
+    // Acción CRUD de guardar (posterior a editar) (EDIT)
     public function update(Request $request, $resource, $id)
     {
         $modelClass = $this->resolveModelClass($resource);
@@ -142,6 +148,7 @@ class CrudController extends Controller
         return redirect()->route('admin.' . $resource . '.index');
     }
 
+    // Acción CRUD de eliminación (DELETE)
     public function destroy($resource, $id)
     {
         $modelClass = $this->resolveModelClass($resource);
