@@ -17,7 +17,10 @@ class CreateEquipoTable extends Migration
             $table->string('ubicacion');
             $table->enum('estado', ['Operativo', 'Mantenimiento', 'Obsoleto', 'Baja']);
             $table->timestamp('fecha_registro');
-            $table->foreignId('id_empleado_asignado')->constrained('empleados')->onDelete('set null');
+            $table->foreignId('id_empleado')
+                  ->nullable()
+                  ->constrained('empleados')
+                  ->onDelete('set null');
             $table->timestamps();
         });
     }

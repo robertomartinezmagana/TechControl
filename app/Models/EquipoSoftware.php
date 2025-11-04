@@ -14,7 +14,7 @@ class EquipoSoftware extends Model
     public $incrementing = false;
     public $timestamps = false;
     protected $fillable = [
-        'id_equipo', 'id_software', 'fecha_instalacion', 'version_instalada'
+        'id_equipo', 'id_software', 'fecha_instalacion', 'fecha_vencimiento', 'version_instalada'
     ];
 
     public static function config()
@@ -53,6 +53,11 @@ class EquipoSoftware extends Model
                     'type' => 'date',
                     'label' => 'Fecha de Instalación',
                     'required' => true
+                ],
+                'fecha_vencimiento_licencia' => [
+                    'type' => 'date',
+                    'label' => 'Vencimiento de Licencia',
+                    'required' => false
                 ],
             ],
         ];

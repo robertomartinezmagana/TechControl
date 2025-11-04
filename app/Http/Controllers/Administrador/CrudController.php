@@ -40,17 +40,21 @@ class CrudController extends Controller
         foreach ($formFields as $name => &$field) {
             if (($field['type'] ?? null) === 'select-model' && isset($field['model'])) {
                 $relatedModel = $field['model'];
-                $field['options'] = $relatedModel::all()->map(function ($item) use ($field) {
-                    $label = $item->{$field['display']};
-                    $subtext = $field['subtext'] ?? null;
-                    if ($subtext && isset($item->$subtext)) {
-                        $label .= ' (' . $item->$subtext . ')';
-                    }
-                    return [
-                        'value' => $item->getKey(),
-                        'label' => $label,
-                    ];
-                })->toArray();
+                $field['options'] = $relatedModel::with('user') // cargar relación User
+                    ->get()
+                    ->sortBy(fn($item) => $item->nombre_completo) // ordenar por nombre completo
+                    ->map(function ($item) use ($field) {
+                        $label = $item->nombre_completo; // atributo de nombre completo
+                        if (isset($item->email)) {
+                            $label .= ' (' . $item->email . ')';
+                        }
+                        return [
+                            'value' => $item->getKey(),
+                            'label' => $label,
+                        ];
+                    })
+                    ->values() // reindexar array después del sort
+                    ->toArray();
             }
         }
         unset($field);

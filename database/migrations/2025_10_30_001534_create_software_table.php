@@ -14,8 +14,6 @@ class CreateSoftwareTable extends Migration
             $table->string('version');
             $table->string('licencia');
             $table->string('fabricante');
-            $table->timestamp('fecha_instalacion');
-            $table->timestamp('fecha_vencimiento_licencia');
             $table->timestamps();
         });
     }

@@ -16,15 +16,22 @@ abstract class UsuarioBase extends Model
         return $this->belongsTo(User::class, 'id_usuario');
     }
 
-    // Accessor para nombre completo.
+    // Accessor para nombre completo
     public function getNombreCompletoAttribute(): string
     {
         return $this->user ? $this->user->name : '(Sin usuario)';
     }
 
-    // Accessor para email.
+    // Accessor para email
     public function getEmailAttribute(): string
     {
         return $this->user ? $this->user->email : '(Sin email)';
+    }
+
+    // Accesor combinado para nombre y correo
+    public function getNombreConEmailAttribute(): string
+    {
+        if (!$this->user) return '(Sin usuario)';
+        return $this->nombre_completo . ' (' . $this->email . ')';
     }
 }

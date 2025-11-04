@@ -12,7 +12,7 @@ class Software extends Model
     protected $table = 'software';
     protected $primaryKey = 'id_software';
     protected $fillable = [
-        'nombre', 'version', 'licencia', 'fabricante', 'fecha_instalacion', 'fecha_vencimiento_licencia'
+        'nombre', 'version', 'licencia', 'fabricante'
     ];
 
     public static function config()
@@ -47,16 +47,6 @@ class Software extends Model
                     'type' => 'text',
                     'label' => 'Fabricante',
                     'required' => true
-                ],
-                'fecha_instalacion' => [
-                    'type' => 'date',
-                    'label' => 'Fecha de Instalación',
-                    'required' => false
-                ],
-                'fecha_vencimiento_licencia' => [
-                    'type' => 'date',
-                    'label' => 'Vencimiento de Licencia',
-                    'required' => false
                 ],
             ],
         ];

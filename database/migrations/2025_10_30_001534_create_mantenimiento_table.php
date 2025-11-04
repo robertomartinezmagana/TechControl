@@ -17,7 +17,7 @@ class CreateMantenimientoTable extends Migration
             $table->enum('estado', ['Pendiente', 'En proceso', 'Completado', 'Cancelado']);
             $table->text('observaciones')->nullable();
             $table->foreignId('id_equipo')->constrained('equipos')->onDelete('cascade');
-            $table->foreignId('id_usuario_tecnico')->constrained('tecnicos')->onDelete('cascade');
+            $table->foreignId('id_tecnico')->constrained('tecnicos')->onDelete('cascade');
             $table->timestamps();
         });
     }

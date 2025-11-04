@@ -12,7 +12,7 @@ class Equipo extends Model
     protected $table = 'equipos';
     protected $primaryKey = 'id_equipo';
     protected $fillable = [
-        'marca', 'modelo', 'numero_serie', 'tipo_equipo', 'ubicacion', 'estado', 'fecha_registro', 'id_empleado_asignado'
+        'marca', 'modelo', 'numero_serie', 'tipo_equipo', 'ubicacion', 'estado', 'fecha_registro', 'id_empleado'
     ];
 
     public static function config()
@@ -36,12 +36,11 @@ class Equipo extends Model
                     'options' => ['Operativo', 'Mantenimiento', 'Obsoleto', 'Baja'],
                     'required' => true
                 ],
-                'id_empleado_asignado' => [
+                'id_empleado' => [
                     'type' => 'select-model',
                     'label' => 'Empleado Asignado',
                     'model' => \App\Models\Empleado::class,
-                    'display' => 'name',
-                    'subtext' => 'email',
+                    'display' => 'nombre_con_email',
                     'required' => false
                 ],
             ],
@@ -52,7 +51,7 @@ class Equipo extends Model
     // Relación M-1 Equipo-Empleado (al que es asignado)
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado_asignado');
+        return $this->belongsTo(Empleado::class, 'id_empleado');
     }
 
     // Relación 1-M Equipo-Incidencias (que presenta)

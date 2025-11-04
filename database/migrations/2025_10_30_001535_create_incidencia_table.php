@@ -17,8 +17,11 @@ class CreateIncidenciaTable extends Migration
             $table->timestamp('fecha_reporte');
             $table->enum('estado', ['Pendiente', 'En proceso', 'Resuelto']);
             $table->enum('prioridad', ['Baja', 'Media', 'Alta']);
-            $table->foreignId('id_usuario_reporta')->constrained('usuarios')->onDelete('cascade');
-            $table->foreignId('id_usuario_tecnico')->nullable()->constrained('tecnicos')->onDelete('set null');
+            $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_tecnico')
+                  ->nullable()
+                  ->constrained('tecnicos')
+                  ->onDelete('set null');
             $table->foreignId('id_equipo')->constrained('equipos')->onDelete('cascade');
             $table->timestamps();
         });
