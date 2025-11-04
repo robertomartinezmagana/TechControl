@@ -21,6 +21,7 @@ copy .env.example .env
 :: Paso 5: Generar la clave de aplicación
 echo Generando la clave de aplicación...
 vendor\bin\sail artisan key:generate
+vendor\bin\sail artisan config:cache
 
 :: Paso 6: Ejecutar migraciones
 echo Ejecutando migraciones...
